@@ -31,3 +31,5 @@ The designs were created to the following widths:
 
 - Family: [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk)
 - Weights: 500
+1256 89IU 9087 5610
+1256 8956 9087 5610

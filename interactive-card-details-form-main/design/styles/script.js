@@ -3,12 +3,15 @@ const cardHolder = document.querySelector("#card-holder");
 const cardNumber = document.querySelector("#CardNumber");
 const cardMonth = document.querySelector("#month");
 const cardYear = document.querySelector("#year");
+const monthYear = document.querySelector(".month-year")
 const cvCode = document.querySelector("#cvc")
 
 const cardNameUI = document.querySelector(".value");
 const cardNumUI = document.querySelector('.card-number');
 const expiryDateUI = document.querySelector('.date')
 const cvcUI = document.querySelector('.cvc-value')
+
+const confirmBtn = document.querySelector('#confirm')
 
 
 
@@ -86,3 +89,155 @@ cvCode.addEventListener('input', function (e) {
 })
 
 //---------------------------- FORM VALIDATION ---------------------------------
+
+confirmBtn.addEventListener('click', cardConfirm);
+
+function onlyNumberKey(evt) {
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)){
+        return setError(cardNumber, 'Phone number can only be numbers');
+    } else{
+        return setSuccess(cardNumber);
+    }
+        
+}
+
+
+function setError(input, errorMsg) {
+    const formControl = input.parentElement;
+    const errorMessage = formControl.querySelector('.form-control div');
+    errorMessage.classList.add("error");
+    errorMessage.textContent = errorMsg;
+}
+
+function setSuccess(input) {
+    const formControl = input.parentElement;
+    const holder = formControl.querySelector('.form-control input')
+    holder.classList.add('success')
+}
+
+function cardConfirm(event) {
+    
+    event.preventDefault();
+
+    let allValid;
+    
+    const validName = cardHolder.value;
+
+    if (validName === "") {
+        setError(cardHolder, "Please enter your name!");
+        allValid = false;
+    } else{
+        setSuccess(cardHolder);
+        allValid = true;
+    }
+
+    const validCard = cardNumber.value;
+    console.log(validCard);
+
+    if (validCard === "") {
+        setError(cardNumber, "Can't be blank")
+        allValid = false;
+    } else {
+        setSuccess(cardNumber);
+        allValid = true;
+    }
+
+    const expiryMonth = cardMonth.value;
+    const expiryYear = cardYear.value;
+    
+    if (expiryMonth === "" || expiryYear === "") {
+        setError(monthYear, "Can't be blank");
+        allValid = false;
+    } else {
+        setSuccess(cardMonth)
+        setSuccess(cardYear);
+        allValid = true;
+    }
+
+    const code = cvCode.value;
+
+    if (code === "") {
+        setError(cvCode, "Can't be blank");
+        allValid = false;
+    } else {
+        setSuccess(cvCode);
+        allValid = true;
+    }
+
+    console.log(allValid);
+
+    if (allValid === true) {
+        window.location.href = 'https://www.goal.com'
+    }
+}
+
+
+
+// function validateName() {
+//     const validName = cardHolder.value;
+//     console.log(validName);
+
+//     if (validName === "") {
+//         setError(cardHolder, "Please enter your name!");
+//         allValid = false;
+//     } else{
+//         setSuccess(cardHolder);
+//         allValid = true;
+//     }
+// }
+
+// function validateCardNumber() {
+//     const validCard = cardNumber.value.split(" ").join('');
+//     console.log(validCard);
+
+//     if (validCard === "") {
+//         setError(cardNumber, "Can't be blank")
+//     } else {
+//         setSuccess(cardNumber)
+//     }
+// }
+
+// function validateExpiry() {
+//     const expiryMonth = cardMonth.value;
+//     const expiryYear = cardYear.value;
+    
+//     if (expiryMonth === "" || expiryYear === "") {
+//         setError(monthYear, "Can't be blank");
+//         allValid = false;
+//     } else {
+//         setSuccess(cardMonth)
+//         setSuccess(cardYear);
+//         allValid = true;
+//     }
+// }
+
+// function validateCVC() {
+//     const code = cvCode.value;
+
+//     if (code === "") {
+//         setError(cvCode, "Can't be blank");
+//         allValid = false;
+//     } else {
+//         setSuccess(cvCode);
+//         allValid = true;
+//     }
+    
+// }
+
+
+
+// function confirm(e) {
+//     e.preventDefault();
+    
+//     validateName();
+//     validateCardNumber();
+//     validateExpiry();
+//     validateCVC();
+
+//     // if (allValid === true) {
+//     //     cardConfirm();
+//     // }
+
+//     console.log(allValid);
+// }
