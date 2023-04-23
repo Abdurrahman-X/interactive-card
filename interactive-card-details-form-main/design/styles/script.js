@@ -30,13 +30,21 @@ cardHolder.addEventListener("input", function (e) {
 
 // Add event listener to the card number input
 cardNumber.addEventListener('input', function (e) {
+    // Check if it is mobile version
+    
     // Check if the input field is empty
-    if (e.target.value === "" && window.innerWidth <= 768) {
+    if (e.target.value === "" ) {
         // Update the card name with the original content
         cardNumUI.textContent = "0000 0000 0000 0000"
         // Update the font-size and letter-spacing styles
         cardNumUI.style.fontSize = '20px';
-        cardNumUI.style.letterSpacing = "1px"
+        cardNumUI.style.letterSpacing = "1px";
+    } else if (e.target.value !== "" && window.innerWidth < 768) {
+        // Update the card number with the input value in real-time
+        cardNumUI.textContent = e.target.value;
+         // Update the font-size and letter-spacing styles
+        cardNumUI.style.fontSize = '20px';
+        cardNumUI.style.letterSpacing = "2px"
     } else {
         // Update the card number with the input value in real-time
         cardNumUI.textContent = e.target.value;
