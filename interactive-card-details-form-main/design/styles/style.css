@@ -144,6 +144,10 @@ input{
     color: hsl(270, 1%, 42%);
 }
 
+input:focus{
+    border-color: 4px solid hsl(278, 68%, 11%);
+}
+
 
 .expiry{
     display: flex;
