@@ -9,6 +9,7 @@ body{
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     width: 1000px;
+    overflow-x: hidden;
 }
 
 
@@ -19,10 +20,11 @@ body{
     color: hsl(0, 100%, 66%);
     visibility: visible;
     font-size: 14px;
+   
 }
 
 .form-control .error input {
-	border-color: hsl(0, 100%, 66%);
+	border:  hsl(0, 100%, 66%);
 }
 
 .form-control .success input {
@@ -30,8 +32,13 @@ body{
     border: 4px solid green;
 }
 
+
+.input-error{
+    border-color:  hsl(0, 100%, 66%);
+}
+
 .success{
-    border: 2px solid #2ecc71;
+    border: 1px solid #2ecc71;
 }
 
 
@@ -50,6 +57,14 @@ body{
     border-radius: 10px;
     margin-top: 100px;
     margin-left: 80px
+}
+
+.card-logo{
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    right: 0;
+    bottom: 0;
 }
 
 .card-details {
@@ -86,19 +101,25 @@ body{
 
 .text-overlay{
     position: absolute;
-    left: 0;
+    letter-spacing: 1px;
+    top: 450px;
+    left: 500px;
     right: 0;
     bottom: 0;
     color: #fff;
     padding: 30px;
 }
 
-.cvc-value{
-    margin-right: 420px;
+/* .cvc-value{
+    position: absolute;
+    top: 0;
+    right: 280px;
+    left: 120px;
+    bottom: 190px;
     text-align: center;
-    margin-bottom: 165px;  
-    color: #fff; 
-}
+    margin-bottom: 25px;  
+    color: red; 
+} */
 
 
 .form-container{
@@ -153,10 +174,47 @@ input{
     cursor: pointer;
 }
 
+.confirmation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+    margin-left: 370px;
+    visibility: hidden;
+}
+.head{
+    font-size: 25px;
+    letter-spacing: 3px;
+    margin: 10px 0;
+}
+
+.sub{
+    font-size: 16px;
+    margin: 10px 0;
+    color: hsl(279, 6%, 55%)
+}
+
+
+.icon-complete{
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin-bottom: 10px;
+    
+}
+
+.confirm{
+    width: 100%;
+}
+
+
 
 @media (max-width: 767px) {
     body{
-        width: 500px;
+        /* width: 500px; */
+        width: 100vw;
         overflow-x: hidden;
     }
     .container{
@@ -165,22 +223,77 @@ input{
     }
 
     .bg-main{
-        background-image: url("../../images/bg-main-desktop.png");
+        background-image: url("../../images/bg-main-mobile.png");
+        background-repeat: no-repeat;
+        background-size: cover;
         width: 100%;
         height: 10%;
     }
 
-    .card-image-back{
-        position: relative;
-    }
-
     .card-details{
         position: absolute;
+        z-index: 2;
+        top: 110px;
+        left: 0;
+        right: 90px;
+    }
+
+    .card-logo{
+        position: absolute;
+        top: 57px;
+        left: 20px;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+    }
+
+    .card-image{
+        position: relative;
+        top: 50px;
+        z-index: 2;
+        width: 310px;
+    }
+
+    .card-number {
+        font-size: 20px;
+        letter-spacing: 1px;
+        margin-bottom: 30px;
+        margin-left: 15px;
+    }
+    
+    .card-holder {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        margin-left: 10px;
+    }
+    .value, .cvc-value, .date{
+        font-size: 12px;
+    }
+
+    .card-image-back{
+        position: absolute;
+        top: 33px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 310px;
+        margin-right: 25px;
+    }
+
+    .text-overlay{
+        position: absolute;
+        letter-spacing: 1px;
+        top: 100px;
+        left: 390px;
+        color: #fff;
+        z-index: 2;
+        padding: 30px;
     }
 
     .form-container{
-        margin: 50px 50px 10px 70px;
-       
+        margin: 100px 0px 0 80px;
     }
 
     input{
@@ -199,16 +312,26 @@ input{
     }
     
     .month-year{
-        width: 20%;
-        margin-right: 25px;
-    }
-    
-    .month-year input{
         width: 35%;
+        margin-right: 5px;
     }
     
-    .cvc input{
-        max-width: 100%;
+    .cvc {
+        width: 38%;
     }    
+    .btn__class {
+        width: 70%;
+        margin-bottom: 30px;
+    }
+
+    .confirmation{
+        margin: 70px 0 10px 120px;
+        visibility: hidden;
+        padding: 0;
+    }
+
+    .confirm{
+        width: 150%;
+    }
 }
 

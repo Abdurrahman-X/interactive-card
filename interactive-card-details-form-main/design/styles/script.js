@@ -3,7 +3,8 @@ const cardHolder = document.querySelector("#card-holder");
 const cardNumber = document.querySelector("#CardNumber");
 const cardMonth = document.querySelector("#month");
 const cardYear = document.querySelector("#year");
-const monthYear = document.querySelector(".month-year")
+const expMonth = document.querySelector(".exp-month");
+const expYear = document.querySelector(".exp-year");
 const cvCode = document.querySelector("#cvc")
 
 const cardNameUI = document.querySelector(".value");
@@ -30,11 +31,11 @@ cardHolder.addEventListener("input", function (e) {
 // Add event listener to the card number input
 cardNumber.addEventListener('input', function (e) {
     // Check if the input field is empty
-    if (e.target.value === "") {
+    if (e.target.value === "" && window.innerWidth <= 768) {
         // Update the card name with the original content
         cardNumUI.textContent = "0000 0000 0000 0000"
         // Update the font-size and letter-spacing styles
-        cardNumUI.style.fontSize = '29px';
+        cardNumUI.style.fontSize = '20px';
         cardNumUI.style.letterSpacing = "1px"
     } else {
         // Update the card number with the input value in real-time
@@ -90,7 +91,7 @@ cvCode.addEventListener('input', function (e) {
 
 //---------------------------- FORM VALIDATION ---------------------------------
 
-confirmBtn.addEventListener('click', cardConfirm);
+//confirmBtn.addEventListener('click', cardConfirm);
 
 function onlyNumberKey(evt) {
     var ASCIICode = (evt.which) ? evt.which : evt.keyCode
@@ -106,17 +107,20 @@ function onlyNumberKey(evt) {
 function setError(input, errorMsg) {
     const formControl = input.parentElement;
     const errorMessage = formControl.querySelector('.form-control div');
+    input.classList.add("input-error");
     errorMessage.classList.add("error");
     errorMessage.textContent = errorMsg;
 }
 
-function setSuccess(input) {
+function setSuccess(input, message) {
     const formControl = input.parentElement;
+    const emptyMsg = formControl.querySelector('.form-control div')
     const holder = formControl.querySelector('.form-control input')
-    holder.classList.add('success')
+    holder.classList.add('success');
+    emptyMsg.textContent = message;
 }
 
-function cardConfirm(event) {
+confirmBtn.addEventListener('click', function (event) {
     
     event.preventDefault();
 
@@ -128,7 +132,7 @@ function cardConfirm(event) {
         setError(cardHolder, "Please enter your name!");
         allValid = false;
     } else{
-        setSuccess(cardHolder);
+        setSuccess(cardHolder, "");
         allValid = true;
     }
 
@@ -136,94 +140,179 @@ function cardConfirm(event) {
     console.log(validCard);
 
     if (validCard === "") {
-        setError(cardNumber, "Can't be blank")
+        setError(cardNumber, "Can't be blank");
+        allValid = false;
+    } else if (validCard.length < "19") {
+        setError(cardNumber, "Invalid card number");
+        allValid = false;
+    } else if (/[a-zA-Z]/.test(validCard)) {
+        setError(cardNumber, "Wrong format, numbers only!");
         allValid = false;
     } else {
-        setSuccess(cardNumber);
+        setSuccess(cardNumber, "");
         allValid = true;
     }
 
     const expiryMonth = cardMonth.value;
-    const expiryYear = cardYear.value;
-    
-    if (expiryMonth === "" || expiryYear === "") {
-        setError(monthYear, "Can't be blank");
+    if (expiryMonth === "") {
+        setError(cardMonth, "Can't be blank");
+        allValid = false;
+    } else if (expiryMonth > "12") {
+        setError(cardMonth, "Invalid month");
         allValid = false;
     } else {
-        setSuccess(cardMonth)
-        setSuccess(cardYear);
-        allValid = true;
+        setSuccess(cardMonth, "");
     }
+
+    const expiryYear = cardYear.value;
+    if (expiryYear === "") {
+        setError(cardYear, "Can't be blank");
+        allValid = false;
+    } else if (expiryYear.length > 2) {
+        setError(cardYear, "Wrong Format");
+        allValid = false;
+    } else {
+        setSuccess(cardYear, "");
+    }
+
+    // const expiryMonth = cardMonth.value;
+    // const expiryYear = cardYear.value;
+    
+    // if (expiryMonth === "") {
+    //     setError(expMonth, "Can't be blank");
+    //     allValid = false;
+    // }
+    
+    // if (expiryYear === "") {
+    //     setError(expYear, "Can't be blank");
+    //     allValid = false;
+    // } 
+    
+    // if (expiryMonth !== "" && expiryYear !== "") {
+    //     setSuccess(expMonth, "")
+    //     setSuccess(expYear, "");
+    //     allValid = true;
+    // } 
+        
+    
 
     const code = cvCode.value;
 
     if (code === "") {
         setError(cvCode, "Can't be blank");
         allValid = false;
+    } else if (code.length < "3") {
+        setError(cvCode, "Invalid cvc code");
+        allValid = false;
     } else {
-        setSuccess(cvCode);
+        setSuccess(cvCode, "");
         allValid = true;
     }
 
     console.log(allValid);
 
     if (allValid === true) {
-        window.location.href = 'https://www.goal.com'
+        document.querySelector(".confirmation").style.visibility = 'visible';
+        document.querySelector(".form-container").style.display = 'none';
+    }
+})
+
+
+
+
+function validateName() {
+    const validName = cardHolder.value;
+    console.log(validName);
+
+    if (validName === "") {
+        setError(cardHolder, "Please enter your name!");
+        allValid = false;
+    } else{
+        setSuccess(cardHolder, "");
+        allValid = true;
     }
 }
 
+function validateCardNumber() {
+    const validCard = cardNumber.value;
+    console.log(validCard);
 
+    if (validCard === "") {
+        setError(cardNumber, "Can't be blank")
+    } else if (validCard.length < "19") {
+        setError(cardNumber, "Invalid card number");
+    } else if (/[a-zA-Z]/.test(validCard)) {
+        setError(cardNumber, "Wrong format, numbers only!");
+    } else {
+        setSuccess(cardNumber, "")
+    }
+}
 
-// function validateName() {
-//     const validName = cardHolder.value;
-//     console.log(validName);
+function validateExpMonth() {
+    const expiryMonth = cardMonth.value;
+    if (expiryMonth === "") {
+        setError(cardMonth, "Can't be blank");
+        allValid = false;
+    } else if (expiryMonth > "12") {
+        setError(cardMonth, "Invalid month");
+        allValid = false;
+    } else {
+        setSuccess(cardMonth, "");
+    }
 
-//     if (validName === "") {
-//         setError(cardHolder, "Please enter your name!");
-//         allValid = false;
-//     } else{
-//         setSuccess(cardHolder);
-//         allValid = true;
-//     }
-// }
+}
 
-// function validateCardNumber() {
-//     const validCard = cardNumber.value.split(" ").join('');
-//     console.log(validCard);
-
-//     if (validCard === "") {
-//         setError(cardNumber, "Can't be blank")
-//     } else {
-//         setSuccess(cardNumber)
-//     }
-// }
+function validateExpYear() {
+    const expiryYear = cardYear.value;
+    if (expiryYear === "") {
+        setError(cardYear, "Can't be blank");
+        allValid = false;
+    } else {
+        setSuccess(cardYear, "");
+    }
+}
 
 // function validateExpiry() {
 //     const expiryMonth = cardMonth.value;
 //     const expiryYear = cardYear.value;
     
-//     if (expiryMonth === "" || expiryYear === "") {
-//         setError(monthYear, "Can't be blank");
+//     if (expiryMonth === "") {
+//         setError(expMonth, "Can't be blank");
 //         allValid = false;
-//     } else {
-//         setSuccess(cardMonth)
-//         setSuccess(cardYear);
-//         allValid = true;
-//     }
-// }
-
-// function validateCVC() {
-//     const code = cvCode.value;
-
-//     if (code === "") {
-//         setError(cvCode, "Can't be blank");
-//         allValid = false;
-//     } else {
-//         setSuccess(cvCode);
-//         allValid = true;
 //     }
     
+//     if (expiryYear === "") {
+//         setError(expYear, "Can't be blank");
+//         allValid = false;
+//     } 
+    
+//     if (expiryMonth !== "" && expiryYear !== "") {
+//         setSuccess(expMonth, "")
+//         setSuccess(expYear, "");
+//         allValid = true;
+//     } 
 // }
+
+
+
+
+
+
+function validateCVC() {
+    const code = cvCode.value;
+
+    if (code === "") {
+        setError(cvCode, "Can't be blank");
+        allValid = false;
+    } else if (code.length < "3") {
+        setError(cvCode, "Invalid cvc code");
+        allValid = false;
+    } else {
+        setSuccess(cvCode, "");
+        allValid = true;
+    }
+    
+}
 
 
 
@@ -241,3 +330,4 @@ function cardConfirm(event) {
 
 //     console.log(allValid);
 // }
+
