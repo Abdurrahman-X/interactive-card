@@ -49,8 +49,8 @@ cardNumber.addEventListener('input', function (e) {
         // Update the card number with the input value in real-time
         cardNumUI.textContent = e.target.value;
          // Update the font-size and letter-spacing styles
-        cardNumUI.style.fontSize = '28px';
-        cardNumUI.style.letterSpacing = "2px"
+        // cardNumUI.style.fontSize = '28px';
+        // cardNumUI.style.letterSpacing = "2px"
     } 
 })
 
